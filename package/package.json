@@ -1,6 +1,6 @@
 {
   "name": "@codersrank/skills-chart",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "CodersRank skills chart widget",
   "main": "cjs/codersrank-skills-chart.js",
   "module": "esm/codersrank-skills-chart.js",
@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/codersrank-org/skills-chart/issues"
   },
-  "homepage": "https://github.com/codersrank-org/skills-chart#readme"
+  "homepage": "https://github.com/codersrank-org/skills-chart#readme",
+  "keywords": [
+    "skills",
+    "profile",
+    "cv",
+    "web component",
+    "chart",
+    "svg"
+  ]
 }
