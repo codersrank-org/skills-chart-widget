@@ -30,7 +30,7 @@ Widget can also be downloaded or linked directly from CDN:
 <script src="https://unpkg.com/@codersrank/skills-chart@x.x.x/codersrank-skills-chart.min.js"></script>
 ```
 
-In this case it is not required to register web component, it is already registered to be use as `<codersrank-skills-chart>` element.
+In this case it is not required to register web component, it is already registered as `<codersrank-skills-chart>` element.
 
 ## Usage
 
