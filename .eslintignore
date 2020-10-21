@@ -1,0 +1,10 @@
+package
+node_modules
+dev/*.js
+dev/**/*.js
+dev/*.map
+dev/**/*.map
+package/*.js
+package/**/*.js
+package/*.map
+package/**/*.map

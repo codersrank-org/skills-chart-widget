@@ -1,0 +1,178 @@
+:host {
+  --font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+  --svg-width: 100%;
+  --svg-height: auto;
+  --axis-bg-color: rgba(0, 0, 0, 0.35);
+  --hidden-area-color: #ddd;
+  --label-text-color: inherit;
+  --label-font-size: 10px;
+  --label-font-weight: 500;
+  --legend-text-color: inherit;
+  --legend-disabled-text-color: #ccc;
+  --legend-font-size: 14px;
+  --preloader-color: #72a0a8;
+  --tooltip-font-size: 12px;
+  --tooltip-total-font-size: 16px;
+  --tooltip-total-font-weight: bold;
+  width: 100%;
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+}
+.codersrank-skills-chart {
+  font-family: var(--font-family);
+  position: relative;
+  &-preloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border: 3px solid var(--preloader-color);
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: preloader 1s infinite linear;
+  }
+  &-svg {
+    position: relative;
+  }
+
+  svg {
+    width: var(--svg-width);
+    height: var(--svg-height);
+    display: block;
+  }
+
+  polygon {
+    transition-duration: 150ms;
+  }
+
+  &-current-line {
+    stroke: rgba(0, 0, 0, 0.25);
+    stroke-width: 1px;
+  }
+  &-hidden {
+    fill: var(--hidden-area-color) !important;
+  }
+  &-axis {
+    margin-bottom: 36px;
+    height: 1px;
+    background: var(--axis-bg-color);
+    color: inherit;
+    display: flex;
+    font-size: var(--label-font-size);
+    font-weight: var(--label-font-weight);
+    justify-content: space-between;
+    line-height: 1;
+    color: var(--label-text-color);
+    > span {
+      padding-top: 10px;
+      width: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      white-space: nowrap;
+      &:first-child {
+        justify-content: flex-start;
+      }
+      &:last-child {
+        justify-content: flex-end;
+      }
+    }
+  }
+  &-tooltip {
+    pointer-events: none;
+    text-align: left;
+    line-height: 1.4;
+    position: absolute;
+    background: #000;
+    border-radius: 4px;
+    color: #fff;
+    font-family: var(--font-family);
+    padding: 8px;
+    font-size: var(--tooltip-font-size);
+    white-space: nowrap;
+    pointer-events: none;
+    top: 50%;
+    transform: translateX(-100%) translateY(-50%);
+    margin-left: -10px;
+    &-right {
+      margin-left: 10px;
+      transform: translateY(-50%);
+    }
+
+    &-label {
+      color: rgba(255, 255, 255, 0.75);
+    }
+    &-total {
+      font-size: var(--tooltip-total-font-size);
+      font-weight: var(--tooltip-total-font-weight);
+    }
+    &-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      span {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 4px;
+      }
+    }
+  }
+  &-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--legend-font-size);
+    width: 100%;
+    color: var(--legend-text-color);
+    margin-top: 36px;
+    &-button {
+      color: inherit;
+      width: auto;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      background-color: transparent;
+      border-radius: 0;
+      border: none;
+      outline: 0 !important;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+      box-shadow: none !important;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      transition-duration: 200ms;
+      padding: 4px 8px;
+      span {
+        transition-duration: 200ms;
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+        border-radius: 50%;
+      }
+      &-hidden {
+        color: var(--legend-disabled-text-color);
+        span {
+          background-color: var(--legend-disabled-text-color) !important;
+        }
+      }
+    }
+  }
+}
+
+@keyframes preloader {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

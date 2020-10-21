@@ -1,0 +1,98 @@
+# CodersRank Skills Chart Widget
+
+CodersRank Skills Chart Widget is a web component that allows you easily integrate nice looking skills chart from your [CodersRank](https://codersrank.io) profile to your personal website:
+
+<img src="preview.png" />
+
+## Install from NPM
+
+Widget script available through NPM:
+
+```
+npm i @codersrank/skills-chart --save
+```
+
+After installation you need to import and register web component:
+
+```js
+import CodersRankSkillsChart from '@codersrank/skills-chart';
+
+// register web component as <codersrank-skills-chart> element
+window.customElements.define('codersrank-skills-chart', CodersRankSkillsChart);
+```
+
+## Install from CDN
+
+Widget can also be downloaded or linked directly from CDN:
+
+```html
+<!-- replace x.x.x with actual version -->
+<script src="https://unpkg.com/@codersrank/skills-chart@x.x.x/codersrank-skills-chart.min.js"></script>
+```
+
+In this case it is not required to register web component, it is already registered to be use as `<codersrank-skills-chart>` element.
+
+## Usage
+
+As it is a web component the usage is pretty simple, just add widget HTML tag with your [CodersRank](https://codersrank.io) username
+
+```html
+<codersrank-skills-chart username="YOUR_USERNAME"></codersrank-skills-chart>
+```
+
+## Widget Attributes
+
+Widget supports following properties as HTML element attributes:
+
+| Name         | Type      | Default | Description                                                                               |
+| ------------ | --------- | ------- | ----------------------------------------------------------------------------------------- |
+| `username`   | `string`  |         | Your [CodersRank](https://codersrank.io) username                                         |
+| `labels`     | `boolean` | `false` | Display chart labels (chart axis with dates)                                              |
+| `legend`     | `boolean` | `false` | Display legend below the chart                                                            |
+| `tooltip`    | `boolean` | `false` | Enables tooltip with number of activities per day                                         |
+| `skills`     | `string`  |         | Allows to specify skills to display in chart. For example `skills="JavaScript, Vue, CSS"` |
+| `svg-width`  | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width              |
+| `svg-height` | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height            |
+
+For example, to enable labels, legend and tooltip:
+
+```html
+<codersrank-skills-chart
+  username="YOUR_USERNAME"
+  labels
+  legend
+  tooltip
+></codersrank-skills-chart>
+```
+
+## Styling
+
+It is possible to customize widget colors with CSS Custom Properties (CSS Variables) by setting them directly on the widget element with style attribute or in CSS.
+
+There are following CSS Custom Properties are available:
+
+| Property                       | Value                                                     |
+| ------------------------------ | --------------------------------------------------------- |
+| `--font-family`                | `Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif` |
+| `--svg-width`                  | `100%`                                                    |
+| `--svg-height`                 | `auto`                                                    |
+| `--axis-bg-color`              | `rgba(0, 0, 0, 0.35)`                                     |
+| `--hidden-area-color`          | `#ddd`                                                    |
+| `--label-text-color`           | `inherit`                                                 |
+| `--label-font-size`            | `10px`                                                    |
+| `--label-font-weight`          | `500`                                                     |
+| `--legend-text-color`          | `inherit`                                                 |
+| `--legend-disabled-text-color` | `#ccc`                                                    |
+| `--legend-font-size`           | `14px`                                                    |
+| `--preloader-color`            | `#72a0a8`                                                 |
+| `--tooltip-font-size`          | `12px`                                                    |
+| `--tooltip-total-font-size`    | `16px`                                                    |
+| `--tooltip-total-font-weight`  | `bold`                                                    |
+
+## Contribution
+
+Yes please! See the [contributing guidelines](https://github.com/codersrank-org/skills-chart/blob/master/CONTRIBUTING.md) for details.
+
+## Licence
+
+This project is licensed under the terms of the [MIT license](https://github.com/codersrank-org/skills-chart/blob/master/LICENSE).
