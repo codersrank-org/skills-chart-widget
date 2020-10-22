@@ -91,8 +91,8 @@ There are following CSS Custom Properties are available:
 
 ## Contribution
 
-Yes please! See the [contributing guidelines](https://github.com/codersrank-org/skills-chart/blob/master/CONTRIBUTING.md) for details.
+Yes please! See the [contributing guidelines](https://github.com/codersrank-org/skills-chart-widget/blob/master/CONTRIBUTING.md) for details.
 
 ## Licence
 
-This project is licensed under the terms of the [MIT license](https://github.com/codersrank-org/skills-chart/blob/master/LICENSE).
+This project is licensed under the terms of the [MIT license](https://github.com/codersrank-org/skills-chart-widget/blob/master/LICENSE).
