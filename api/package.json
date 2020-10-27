@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "skills-chart-image",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "CodersRank Ltd.",
+  "license": "MIT"
+}
