@@ -89,6 +89,15 @@ There are following CSS Custom Properties are available:
 | `--tooltip-total-font-size`    | `16px`                                                    |
 | `--tooltip-total-font-weight`  | `bold`                                                    |
 
+For example, to change legend text color to `red` and font-size to `12px`, add this to CSS stylesheet:
+
+```css
+codersrank-skills-chart {
+  --legend-text-color: red;
+  --legend-font-size: 12px;
+}
+```
+
 ## Contribution
 
 Yes please! See the [contributing guidelines](https://github.com/codersrank-org/skills-chart-widget/blob/master/CONTRIBUTING.md) for details.
