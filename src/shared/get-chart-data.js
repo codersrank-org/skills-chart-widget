@@ -7,7 +7,12 @@ export const getChartData = (data = [], displaySkills = []) => {
   const languagesList = [];
   scoresData.forEach((score) => {
     score.languages.forEach((languageData) => {
-      if (displaySkills.length && !displaySkills.includes(languageData.language)) return;
+      if (displaySkills.length > 0) {
+        const inDisplaySkills = displaySkills
+          .map((s) => s.toLowerCase())
+          .includes(languageData.language.toLowerCase());
+        if (!inDisplaySkills) return;
+      }
       if (!languagesList.includes(languageData.language)) {
         languagesList.push(languageData.language);
       }
