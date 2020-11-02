@@ -122,10 +122,22 @@ class CodersRankSkillsChart extends HTMLElement {
       .filter((s) => !!s);
   }
 
+  set skills(value) {
+    this.setAttribute('skills', value);
+  }
+
   get showOtherSkills() {
     const showOtherSkills = this.getAttribute('show-other-skills');
     if (showOtherSkills === '' || showOtherSkills === 'true') return true;
     return false;
+  }
+
+  set showOtherSkills(value) {
+    this.setAttribute('show-other-skills', value);
+  }
+
+  set ['show-other-skills'](value) {
+    this.setAttribute('show-other-skills', value);
   }
 
   get tooltip() {
@@ -134,8 +146,16 @@ class CodersRankSkillsChart extends HTMLElement {
     return false;
   }
 
+  set tooltip(value) {
+    this.setAttribute('tooltip', value);
+  }
+
   get username() {
     return this.getAttribute('username');
+  }
+
+  set username(value) {
+    this.setAttribute('username', value);
   }
 
   get svgWidth() {
@@ -143,9 +163,25 @@ class CodersRankSkillsChart extends HTMLElement {
     return svgWidth || 640;
   }
 
+  set svgWidth(value) {
+    this.setAttribute('svg-width', value);
+  }
+
+  set ['svg-width'](value) {
+    this.setAttribute('svg-width', value);
+  }
+
   get svgHeight() {
     const svgHeight = parseInt(this.getAttribute('svg-height') || 0, 10);
     return svgHeight || 320;
+  }
+
+  set svgHeight(value) {
+    this.setAttribute('svg-height', value);
+  }
+
+  set ['svg-height'](value) {
+    this.setAttribute('svg-height', value);
   }
 
   get legend() {
@@ -154,10 +190,18 @@ class CodersRankSkillsChart extends HTMLElement {
     return false;
   }
 
+  set legend(value) {
+    this.setAttribute('legend', value);
+  }
+
   get labels() {
     const labels = this.getAttribute('labels');
     if (labels === '' || labels === 'true') return true;
     return false;
+  }
+
+  set labels(value) {
+    this.setAttribute('labels', value);
   }
 
   render() {
