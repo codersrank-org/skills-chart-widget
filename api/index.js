@@ -488,6 +488,7 @@ const renderChart = ({
 };
 
 module.exports = async function (context, req) {
+  var functionStartTime = new Date().getTime();
   if (!req.query.username) {
     context.res = {
       status: 200,
@@ -532,4 +533,13 @@ module.exports = async function (context, req) {
     },
     body: svg,
   };
+  var functionTime = new Date().getTime() - functionStartTime;
+  console.log('Skills chart generated with %o', {
+    username: req.query.username,
+    skills: skills,
+    width: width,
+    height: height,
+    showOtherSkills: showOtherSkills,
+    timeTook: functionTime,
+  });
 };
