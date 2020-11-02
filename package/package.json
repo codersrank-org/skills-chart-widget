@@ -1,6 +1,6 @@
 {
   "name": "@codersrank/skills-chart",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "CodersRank skills chart widget",
   "main": "cjs/codersrank-skills-chart.js",
   "module": "esm/codersrank-skills-chart.js",
