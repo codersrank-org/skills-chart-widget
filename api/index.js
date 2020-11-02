@@ -507,7 +507,7 @@ async function handleRequest(request) {
 // });
 
 module.exports = async function (context, req) {
-  if (req.query.username) {
+  if (!req.query.username) {
     context.res = {
       status: 200,
       headers: {
