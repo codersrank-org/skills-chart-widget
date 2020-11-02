@@ -245,7 +245,23 @@ const languageColors = {
   Other: '#bbb',
 };
 
-const fetchData = (username) => {
+const fetchData = async (username) => {
+  return new Promise((resolve, reject) => {
+    const req = https.request(
+      `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
+      (res) => {
+        const chunks = [];
+        res.on('data', (data) => chunks.push(data));
+        res.on('end', () => {
+          let body = Buffer.concat(chunks);
+          resolve(JSON.parse(body));
+        });
+      },
+    );
+    req.on('error', reject);
+    req.end();
+  });
+
   let data = '';
   https
     .get(
