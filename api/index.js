@@ -1,4 +1,4 @@
-import * as fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
 const languageColors = {
   '1C Enterprise': '#814CCC',
