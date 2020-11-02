@@ -44,15 +44,16 @@ As it is a web component the usage is pretty simple, just add widget HTML tag wi
 
 Widget supports following properties as HTML element attributes:
 
-| Name         | Type      | Default | Description                                                                               |
-| ------------ | --------- | ------- | ----------------------------------------------------------------------------------------- |
-| `username`   | `string`  |         | Your [CodersRank](https://codersrank.io) username                                         |
-| `labels`     | `boolean` | `false` | Display chart labels (chart axis with dates)                                              |
-| `legend`     | `boolean` | `false` | Display legend below the chart                                                            |
-| `tooltip`    | `boolean` | `false` | Enables tooltip with number of activities per day                                         |
-| `skills`     | `string`  |         | Allows to specify skills to display in chart. For example `skills="JavaScript, Vue, CSS"` |
-| `svg-width`  | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width              |
-| `svg-height` | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height            |
+| Name                | Type      | Default | Description                                                                               |
+| ------------------- | --------- | ------- | ----------------------------------------------------------------------------------------- |
+| `username`          | `string`  |         | Your [CodersRank](https://codersrank.io) username                                         |
+| `labels`            | `boolean` | `false` | Display chart labels (chart axis with dates)                                              |
+| `legend`            | `boolean` | `false` | Display legend below the chart                                                            |
+| `tooltip`           | `boolean` | `false` | Enables tooltip with number of activities per day                                         |
+| `skills`            | `string`  |         | Allows to specify skills to display in chart. For example `skills="JavaScript, Vue, CSS"` |
+| `svg-width`         | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width              |
+| `svg-height`        | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height            |
+| `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area              |
 
 For example, to enable labels, legend and tooltip:
 
@@ -88,6 +89,7 @@ There are following CSS Custom Properties are available:
 | `--tooltip-font-size`          | `12px`                                                    |
 | `--tooltip-total-font-size`    | `16px`                                                    |
 | `--tooltip-total-font-weight`  | `bold`                                                    |
+| `--other-skills-area-color`    | `#bbb`                                                    |
 
 For example, to change legend text color to `red` and font-size to `12px`, add this to CSS stylesheet:
 
@@ -96,6 +98,50 @@ codersrank-skills-chart {
   --legend-text-color: red;
   --legend-font-size: 12px;
 }
+```
+
+## Events
+
+Widget element supports the following events:
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>error</code></td>
+      <td>Will be fired on data request error</td>
+      <td>`event.detail` will contain an error object</td>
+    </tr>
+    <tr>
+      <td><code>data</code></td>
+      <td>Will be fired right after data request</td>
+      <td>
+        `event.detail` will contain an object with `highest` and `scores` properties.
+        <p>`highest` object contains information about when user had the highest score</p>
+        <p>`scores` array contains information about skills scores by dates</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+For example:
+
+```html
+<codersrank-skills-chart id="skills-chart" skils="..."></codersrank-skills-chart>
+```
+
+```js
+function onData(event) {
+  const highest = event.detail.highest;
+  console.log(`Highest score was ${highest.score} on ${highest.date}`);
+}
+document.querySelector('#skills-chart').addEventListener('data', onData);
 ```
 
 ## Contribution

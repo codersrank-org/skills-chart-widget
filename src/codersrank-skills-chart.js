@@ -53,8 +53,49 @@ class CodersRankSkillsChart extends HTMLElement {
     };
   }
 
+  // eslint-disable-next-line
+  getHighestScore(scores) {
+    let score = 0;
+    let date = null;
+    scores.forEach((scoreData) => {
+      let summ = 0;
+      scoreData.languages.forEach((langData) => {
+        summ += langData.score;
+      });
+      if (summ > score) {
+        score = summ;
+        date = scoreData.date;
+      }
+    });
+    return {
+      score,
+      date,
+    };
+  }
+
+  emitData(data = {}) {
+    const scores = data.scores || {};
+    const event = new CustomEvent('data', {
+      detail: { scores, highest: this.getHighestScore(scores) },
+    });
+    this.dispatchEvent(event);
+  }
+
+  emitError(err) {
+    const event = new CustomEvent('error', { detail: err });
+    this.dispatchEvent(event);
+  }
+
   static get observedAttributes() {
-    return ['username', 'svg-width', 'svg-height', 'legend', 'labels', 'skills'];
+    return [
+      'username',
+      'svg-width',
+      'svg-height',
+      'legend',
+      'labels',
+      'skills',
+      'show-other-skills',
+    ];
   }
 
   get visibleLabels() {
@@ -81,14 +122,40 @@ class CodersRankSkillsChart extends HTMLElement {
       .filter((s) => !!s);
   }
 
+  set skills(value) {
+    this.setAttribute('skills', value);
+  }
+
+  get showOtherSkills() {
+    const showOtherSkills = this.getAttribute('show-other-skills');
+    if (showOtherSkills === '' || showOtherSkills === 'true') return true;
+    return false;
+  }
+
+  set showOtherSkills(value) {
+    this.setAttribute('show-other-skills', value);
+  }
+
+  set ['show-other-skills'](value) {
+    this.setAttribute('show-other-skills', value);
+  }
+
   get tooltip() {
     const tooltip = this.getAttribute('tooltip');
     if (tooltip === '' || tooltip === 'true') return true;
     return false;
   }
 
+  set tooltip(value) {
+    this.setAttribute('tooltip', value);
+  }
+
   get username() {
     return this.getAttribute('username');
+  }
+
+  set username(value) {
+    this.setAttribute('username', value);
   }
 
   get svgWidth() {
@@ -96,9 +163,25 @@ class CodersRankSkillsChart extends HTMLElement {
     return svgWidth || 640;
   }
 
+  set svgWidth(value) {
+    this.setAttribute('svg-width', value);
+  }
+
+  set ['svg-width'](value) {
+    this.setAttribute('svg-width', value);
+  }
+
   get svgHeight() {
     const svgHeight = parseInt(this.getAttribute('svg-height') || 0, 10);
     return svgHeight || 320;
+  }
+
+  set svgHeight(value) {
+    this.setAttribute('svg-height', value);
+  }
+
+  set ['svg-height'](value) {
+    this.setAttribute('svg-height', value);
   }
 
   get legend() {
@@ -107,10 +190,18 @@ class CodersRankSkillsChart extends HTMLElement {
     return false;
   }
 
+  set legend(value) {
+    this.setAttribute('legend', value);
+  }
+
   get labels() {
     const labels = this.getAttribute('labels');
     if (labels === '' || labels === 'true') return true;
     return false;
+  }
+
+  set labels(value) {
+    this.setAttribute('labels', value);
   }
 
   render() {
@@ -172,11 +263,13 @@ class CodersRankSkillsChart extends HTMLElement {
     this.render();
     fetchData(username)
       .then((data) => {
-        this.data = getChartData(data.scores, this.displaySkills);
+        this.emitData(data);
+        this.data = getChartData(data.scores, this.displaySkills, this.showOtherSkills);
         this.state = STATE_SUCCESS;
         this.render();
       })
-      .catch(() => {
+      .catch((err) => {
+        this.emitError(err);
         this.state = STATE_ERROR;
         this.render();
       });

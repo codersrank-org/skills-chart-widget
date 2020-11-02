@@ -33,7 +33,8 @@
 
     .dark-layout codersrank-skills-chart {
       --legend-disabled-text-color: #666;
-      --hidden-area-color: #333;
+      --hidden-area-color: #222;
+      --other-skills-area-color: #333;
     }
   </style>
 </head>
@@ -51,6 +52,11 @@
       skills="JavaScript, TypeScript, Vue, Svelte, CSS, SCSS">
     </codersrank-skills-chart>
 
+    <h2>Only selected skills + group other skills</h2>
+    <codersrank-skills-chart username="nolimits4web" labels legend tooltip skills="JavaScript, TypeScript, Vue"
+      show-other-skills>
+    </codersrank-skills-chart>
+
     <h2>Without labels and legend</h2>
     <codersrank-skills-chart username="nolimits4web" tooltip skills="JavaScript, TypeScript, Vue, Svelte, CSS, SCSS">
     </codersrank-skills-chart>
@@ -58,10 +64,18 @@
     <div class="dark-layout">
       <h2>On dark layout</h2>
       <codersrank-skills-chart class="codersrank-skills-chart-dark" username="nolimits4web" labels tooltip legend
-        skills="JavaScript, TypeScript, Vue, Svelte, CSS, SCSS"></codersrank-skills-chart>
+        skills="JavaScript, TypeScript, Vue, Svelte, CSS, SCSS" show-other-skills></codersrank-skills-chart>
     </div>
   </main>
   <script src="codersrank-skills-chart.js"></script>
+  <script>
+    document.querySelector('codersrank-skills-chart').addEventListener('error', (e) => {
+      console.log('Error', e.detail)
+    });
+    document.querySelector('codersrank-skills-chart').addEventListener('data', (e) => {
+      console.log('Data', e.detail)
+    });
+  </script>
 </body>
 
 </html>

@@ -291,7 +291,7 @@ const getColor = (language) => {
     : stringToColor(language, false);
 };
 
-const getChartData = (data = [], displaySkills = []) => {
+const getChartData = (data = [], displaySkills = [], showOtherSkills = false) => {
   const scoresData = [...data];
   scoresData.reverse();
 
@@ -326,10 +326,33 @@ const getChartData = (data = [], displaySkills = []) => {
     };
   });
 
+  let otherDataset;
+  if (showOtherSkills) {
+    const values = [];
+    scoresData.forEach((score) => {
+      let otherScore = 0;
+      score.languages.forEach((langData) => {
+        if (!languagesList.includes(langData.language)) {
+          otherScore += langData.score;
+        }
+      });
+      values.push(otherScore);
+    });
+    otherDataset = {
+      label: 'Other',
+      color: 'var(--other-skills-area-color)',
+      values,
+    };
+  }
+
   datasets.sort((a, b) => {
     if (b.label === 'Other') return -1;
     return a.label > b.label ? 1 : -1;
   });
+
+  if (otherDataset) {
+    datasets.push(otherDataset);
+  }
 
   return {
     labels,
@@ -465,6 +488,7 @@ const renderChart = ({
 };
 
 module.exports = async function (context, req) {
+  console.log(req.query);
   if (!req.query.username) {
     context.res = {
       status: 200,
@@ -494,8 +518,17 @@ module.exports = async function (context, req) {
     height = req.query.height;
   }
 
+  let showOtherSkills = false;
+  if (req.query.show_other_skills) {
+    showOtherSkills = req.query.show_other_skills || false;
+  }
+  if (showOtherSkills === 'true') showOtherSkills = false;
+
   const data = await fetchData(req.query.username);
   const chartData = getChartData(data.scores, skills);
+
+  const data = await fetchData(username);
+  const chartData = getChartData(data.scores, skills, showOtherSkills);
   const svg = renderChart({
     data: chartData,
     labels: true,

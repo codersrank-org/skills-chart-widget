@@ -1,11 +1,11 @@
 {
   "name": "@codersrank/skills-chart",
-  "version": "0.9.6",
+  "version": "0.9.9",
   "description": "CodersRank skills chart widget",
   "main": "cjs/codersrank-skills-chart.js",
   "module": "esm/codersrank-skills-chart.js",
   "jsnext:main": "esm/codersrank-skills-chart.js",
-  "browser": "codersrank-skills-chart.js",
+  "browser": "esm/codersrank-skills-chart.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codersrank-org/skills-chart-widget.git"
