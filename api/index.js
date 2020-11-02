@@ -509,11 +509,47 @@ async function handleRequest(request) {
 module.exports = async function (context, req) {
   if (req.query.username) {
     context.res = {
-      status: 400,
-      body: 'Please pass a username on the query string',
+      status: 200,
+      headers: {
+        'content-type': 'image/svg+xml;charset=UTF-8',
+      },
+      body: '<svg xmlns="http://www.w3.org/2000/svg"></svg>',
     };
   }
+
+  let skills = [];
+
+  if (req.query.skills) {
+    skills = req.query.skills
+      .split(',')
+      .map((s) => s.trim())
+      .filter((s) => !!s);
+  }
+
+  let width = 640;
+  let height = 320;
+
+  if (req.query.width) {
+    width = req.query.width;
+  }
+  if (req.query.height) {
+    height = req.query.height;
+  }
+
+  const data = await fetchData(username);
+  const chartData = getChartData(data.scores, skills);
+  const svg = renderChart({
+    data: chartData,
+    labels: true,
+    legend: true,
+    svgWidth: width,
+    svgHeight: height,
+  });
+
   context.res = {
-    body: 'hi',
+    headers: {
+      'content-type': 'image/svg+xml;charset=UTF-8',
+    },
+    body: svg,
   };
 };
