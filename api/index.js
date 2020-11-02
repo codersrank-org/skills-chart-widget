@@ -513,5 +513,7 @@ module.exports = async function (context, req) {
       body: 'Please pass a username on the query string',
     };
   }
-  context.res = 'hi';
+  context.res = {
+    body: 'hi',
+  };
 };
