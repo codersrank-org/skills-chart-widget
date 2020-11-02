@@ -1,6 +1,6 @@
 import { getColor } from './get-color';
 
-export const getChartData = (data = [], displaySkills = []) => {
+export const getChartData = (data = [], displaySkills = [], showOtherSkills = false) => {
   const scoresData = [...data];
   scoresData.reverse();
 
@@ -35,10 +35,32 @@ export const getChartData = (data = [], displaySkills = []) => {
     };
   });
 
+  let otherDataset;
+  if (showOtherSkills) {
+    const values = [];
+    scoresData.forEach((score) => {
+      let otherScore = 0;
+      score.languages.forEach((langData) => {
+        if (!languagesList.includes(langData.language)) {
+          otherScore += langData.score;
+        }
+      });
+      values.push(otherScore);
+    });
+    otherDataset = {
+      label: 'Other',
+      color: 'var(--other-skills-area-color)',
+      values,
+    };
+  }
+
   datasets.sort((a, b) => {
-    if (b.label === 'Other') return -1;
     return a.label > b.label ? 1 : -1;
   });
+
+  if (otherDataset) {
+    datasets.push(otherDataset);
+  }
 
   return {
     labels,

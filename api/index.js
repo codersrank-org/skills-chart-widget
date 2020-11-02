@@ -287,7 +287,7 @@ const getColor = (language) => {
     : stringToColor(language, false);
 };
 
-const getChartData = (data = [], displaySkills = []) => {
+const getChartData = (data = [], displaySkills = [], showOtherSkills = false) => {
   const scoresData = [...data];
   scoresData.reverse();
 
@@ -322,10 +322,33 @@ const getChartData = (data = [], displaySkills = []) => {
     };
   });
 
+  let otherDataset;
+  if (showOtherSkills) {
+    const values = [];
+    scoresData.forEach((score) => {
+      let otherScore = 0;
+      score.languages.forEach((langData) => {
+        if (!languagesList.includes(langData.language)) {
+          otherScore += langData.score;
+        }
+      });
+      values.push(otherScore);
+    });
+    otherDataset = {
+      label: 'Other',
+      color: 'var(--other-skills-area-color)',
+      values,
+    };
+  }
+
   datasets.sort((a, b) => {
     if (b.label === 'Other') return -1;
     return a.label > b.label ? 1 : -1;
   });
+
+  if (otherDataset) {
+    datasets.push(otherDataset);
+  }
 
   return {
     labels,
@@ -480,14 +503,19 @@ async function handleRequest(request) {
   }
   let width = 640;
   let height = 320;
+  let showOtherSkills = false;
   if (request.url.indexOf('width=') >= 0) {
     width = parseInt(request.url.split('width=')[1].split('&')[0] || 640, 10) || 640;
   }
   if (request.url.indexOf('height=') >= 0) {
     height = parseInt(request.url.split('height=')[1].split('&')[0] || 320, 10) || 320;
   }
+  if (request.url.indexOf('show-other-skills=') >= 0) {
+    showOtherSkills = request.url.split('show-other-skills=')[1].split('&')[0] || false;
+    if (showOtherSkills === 'true') showOtherSkills = false;
+  }
   const data = await fetchData(username);
-  const chartData = getChartData(data.scores, skills);
+  const chartData = getChartData(data.scores, skills, showOtherSkills);
   const svg = renderChart({
     data: chartData,
     labels: true,

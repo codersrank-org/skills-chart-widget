@@ -54,7 +54,15 @@ class CodersRankSkillsChart extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['username', 'svg-width', 'svg-height', 'legend', 'labels', 'skills'];
+    return [
+      'username',
+      'svg-width',
+      'svg-height',
+      'legend',
+      'labels',
+      'skills',
+      'show-other-skills',
+    ];
   }
 
   get visibleLabels() {
@@ -79,6 +87,12 @@ class CodersRankSkillsChart extends HTMLElement {
       .split(',')
       .map((s) => s.trim())
       .filter((s) => !!s);
+  }
+
+  get showOtherSkills() {
+    const showOtherSkills = this.getAttribute('show-other-skills');
+    if (showOtherSkills === '' || showOtherSkills === 'true') return true;
+    return false;
   }
 
   get tooltip() {
@@ -172,7 +186,7 @@ class CodersRankSkillsChart extends HTMLElement {
     this.render();
     fetchData(username)
       .then((data) => {
-        this.data = getChartData(data.scores, this.displaySkills);
+        this.data = getChartData(data.scores, this.displaySkills, this.showOtherSkills);
         this.state = STATE_SUCCESS;
         this.render();
       })
