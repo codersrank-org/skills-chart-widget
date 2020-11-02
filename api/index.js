@@ -502,9 +502,9 @@ async function handleRequest(request) {
   });
 }
 // eslint-disable-next-line
-addEventListener('fetch', (event) => {
-  return event.respondWith(handleRequest(event.request));
-});
+// addEventListener('fetch', (event) => {
+//   return event.respondWith(handleRequest(event.request));
+// });
 
 module.exports = async function (context, req) {
   if (req.query.username) {
