@@ -505,3 +505,13 @@ async function handleRequest(request) {
 addEventListener('fetch', (event) => {
   return event.respondWith(handleRequest(event.request));
 });
+
+module.exports = async function (context, req) {
+  if (req.query.username) {
+    context.res = {
+      status: 400,
+      body: 'Please pass a username on the query string',
+    };
+  }
+  context.res = 'hi';
+};
