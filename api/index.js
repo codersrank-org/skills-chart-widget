@@ -259,6 +259,7 @@ const fetchData = (username) => {
 
         // called when the complete response is received.
         res.on('end', () => {
+          console.log(JSON.parse(data));
           return JSON.parse(data);
         });
       },
