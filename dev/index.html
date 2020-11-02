@@ -68,6 +68,14 @@
     </div>
   </main>
   <script src="codersrank-skills-chart.js"></script>
+  <script>
+    document.querySelector('codersrank-skills-chart').addEventListener('error', (e) => {
+      console.log('Error', e.detail)
+    });
+    document.querySelector('codersrank-skills-chart').addEventListener('data', (e) => {
+      console.log('Data', e.detail)
+    });
+  </script>
 </body>
 
 </html>

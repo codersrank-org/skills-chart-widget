@@ -53,6 +53,39 @@ class CodersRankSkillsChart extends HTMLElement {
     };
   }
 
+  // eslint-disable-next-line
+  getHighestScore(scores) {
+    let score = 0;
+    let date = null;
+    scores.forEach((scoreData) => {
+      let summ = 0;
+      scoreData.languages.forEach((langData) => {
+        summ += langData.score;
+      });
+      if (summ > score) {
+        score = summ;
+        date = scoreData.date;
+      }
+    });
+    return {
+      score,
+      date,
+    };
+  }
+
+  emitData(data = {}) {
+    const scores = data.scores || {};
+    const event = new CustomEvent('data', {
+      detail: { scores, highest: this.getHighestScore(scores) },
+    });
+    this.dispatchEvent(event);
+  }
+
+  emitError(err) {
+    const event = new CustomEvent('error', { detail: err });
+    this.dispatchEvent(event);
+  }
+
   static get observedAttributes() {
     return [
       'username',
@@ -186,11 +219,13 @@ class CodersRankSkillsChart extends HTMLElement {
     this.render();
     fetchData(username)
       .then((data) => {
+        this.emitData(data);
         this.data = getChartData(data.scores, this.displaySkills, this.showOtherSkills);
         this.state = STATE_SUCCESS;
         this.render();
       })
-      .catch(() => {
+      .catch((err) => {
+        this.emitError(err);
         this.state = STATE_ERROR;
         this.render();
       });

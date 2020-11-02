@@ -100,6 +100,50 @@ codersrank-skills-chart {
 }
 ```
 
+## Events
+
+Widget element supports the following events:
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>error</code></td>
+      <td>Will be fired on data request error</td>
+      <td>`event.detail` will contain an error object</td>
+    </tr>
+    <tr>
+      <td><code>data</code></td>
+      <td>Will be fired right after data request</td>
+      <td>
+        `event.detail` will contain an object with `highest` and `scores` properties.
+        <p>`highest` object contains information about when user had the highest score</p>
+        <p>`scores` array contains information about skills scores by dates</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+For example:
+
+```html
+<codersrank-skills-chart id="skills-chart" skils="..."></codersrank-skills-chart>
+```
+
+```js
+function onData(event) {
+  const highest = event.detail.highest;
+  console.log(`Highest score was ${highest.score} on ${highest.date}`);
+}
+document.querySelector('#skills-chart').addEventListener('data', onData);
+```
+
 ## Contribution
 
 Yes please! See the [contributing guidelines](https://github.com/codersrank-org/skills-chart-widget/blob/master/CONTRIBUTING.md) for details.
