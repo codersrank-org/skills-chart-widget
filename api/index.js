@@ -519,9 +519,9 @@ module.exports = async function (context, req) {
   }
 
   let showOtherSkills = false;
-  if (req.query.show_other_skills) {
+  if (req.query['show-other-skills']) {
     console.log('show other skills active');
-    showOtherSkills = req.query.show_other_skills || false;
+    showOtherSkills = req.query['show-other-skills'] || false;
     if (showOtherSkills === 'true') showOtherSkills = false;
   }
 
