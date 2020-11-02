@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const https = require('https');
 
 const languageColors = {
   '1C Enterprise': '#814CCC',
@@ -246,6 +246,27 @@ const languageColors = {
 };
 
 const fetchData = (username) => {
+  return https
+    .get(
+      `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
+      (res) => {
+        let data = '';
+
+        // called when a data chunk is received.
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        // called when the complete response is received.
+        res.on('end', () => {
+          return JSON.parse(data);
+        });
+      },
+    )
+    .on('error', (err) => {
+      console.log('Error: ', err.message);
+    });
+
   return fetch(
     `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
     {
