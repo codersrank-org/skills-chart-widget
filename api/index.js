@@ -536,7 +536,7 @@ module.exports = async function (context, req) {
     height = req.query.height;
   }
 
-  const data = await fetchData(username);
+  const data = await fetchData(req.query.username);
   const chartData = getChartData(data.scores, skills);
   const svg = renderChart({
     data: chartData,
