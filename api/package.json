@@ -5,5 +5,8 @@
   "description": "",
   "main": "index.js",
   "author": "CodersRank Ltd.",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }

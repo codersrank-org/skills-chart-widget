@@ -1,3 +1,5 @@
+import * as fetch from 'node-fetch';
+
 const languageColors = {
   '1C Enterprise': '#814CCC',
   ABAP: '#E8274B',
