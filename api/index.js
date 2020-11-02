@@ -488,7 +488,6 @@ const renderChart = ({
 };
 
 module.exports = async function (context, req) {
-  console.log(req.query);
   if (!req.query.username) {
     context.res = {
       status: 200,
@@ -498,33 +497,26 @@ module.exports = async function (context, req) {
       body: '<svg xmlns="http://www.w3.org/2000/svg"></svg>',
     };
   }
-
   let skills = [];
-
   if (req.query.skills) {
     skills = req.query.skills
       .split(',')
       .map((s) => s.trim())
       .filter((s) => !!s);
   }
-
   let width = 640;
   let height = 320;
-
   if (req.query.width) {
     width = req.query.width;
   }
   if (req.query.height) {
     height = req.query.height;
   }
-
   let showOtherSkills = false;
   if (req.query['show-other-skills']) {
-    console.log('show other skills active');
     showOtherSkills = req.query['show-other-skills'] || false;
     if (showOtherSkills === 'true') showOtherSkills = false;
   }
-
   const data = await fetchData(req.query.username);
   const chartData = getChartData(data.scores, skills, showOtherSkills);
   const svg = renderChart({
@@ -534,7 +526,6 @@ module.exports = async function (context, req) {
     svgWidth: width,
     svgHeight: height,
   });
-
   context.res = {
     headers: {
       'content-type': 'image/svg+xml;charset=UTF-8',
