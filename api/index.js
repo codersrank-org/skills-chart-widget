@@ -261,43 +261,6 @@ const fetchData = async (username) => {
     req.on('error', reject);
     req.end();
   });
-
-  let data = '';
-  https
-    .get(
-      `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
-      (res) => {
-        // called when a data chunk is received.
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-
-        // called when the complete response is received.
-        res.on('end', () => {
-          console.log(JSON.parse(data));
-          data = JSON.parse(data);
-        });
-      },
-    )
-    .on('error', (err) => {
-      console.log('Error: ', err.message);
-    });
-
-  return data;
-
-  return fetch(
-    `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-      },
-    },
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
 };
 
 const stringToColor = (str = '') => {
@@ -500,52 +463,6 @@ const renderChart = ({
     </svg>
   `.trim();
 };
-
-async function handleRequest(request) {
-  if (request.url.indexOf('username') < 0) {
-    return new Response('<svg xmlns="http://www.w3.org/2000/svg"></svg>', {
-      headers: {
-        'content-type': 'image/svg+xml;charset=UTF-8',
-      },
-    });
-  }
-  const username = request.url.split('username=')[1].split('&')[0];
-  let skills = [];
-  if (request.url.indexOf('skills=') >= 0) {
-    skills = request.url
-      .split('skills=')[1]
-      .split('&')[0]
-      .split(',')
-      .map((s) => s.trim())
-      .filter((s) => !!s);
-  }
-  let width = 640;
-  let height = 320;
-  if (request.url.indexOf('width=') >= 0) {
-    width = parseInt(request.url.split('width=')[1].split('&')[0] || 640, 10) || 640;
-  }
-  if (request.url.indexOf('height=') >= 0) {
-    height = parseInt(request.url.split('height=')[1].split('&')[0] || 320, 10) || 320;
-  }
-  const data = await fetchData(username);
-  const chartData = getChartData(data.scores, skills);
-  const svg = renderChart({
-    data: chartData,
-    labels: true,
-    legend: true,
-    svgWidth: width,
-    svgHeight: height,
-  });
-  return new Response(svg, {
-    headers: {
-      'content-type': 'image/svg+xml;charset=UTF-8',
-    },
-  });
-}
-// eslint-disable-next-line
-// addEventListener('fetch', (event) => {
-//   return event.respondWith(handleRequest(event.request));
-// });
 
 module.exports = async function (context, req) {
   if (!req.query.username) {
