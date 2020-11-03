@@ -90,6 +90,8 @@ There are following CSS Custom Properties are available:
 | `--tooltip-total-font-size`    | `16px`                                                    |
 | `--tooltip-total-font-weight`  | `bold`                                                    |
 | `--other-skills-area-color`    | `#bbb`                                                    |
+| `--chart-bg-color`             | `transparent`                                             |
+| `--chart-border-radius`        | `0px`                                                     |
 
 For example, to change legend text color to `red` and font-size to `12px`, add this to CSS stylesheet:
 

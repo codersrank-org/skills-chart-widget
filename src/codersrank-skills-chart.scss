@@ -15,6 +15,8 @@
   --tooltip-total-font-size: 16px;
   --tooltip-total-font-weight: bold;
   --other-skills-area-color: #bbb;
+  --chart-bg-color: transparent;
+  --chart-border-radius: 0px;
   width: 100%;
   display: block;
   position: relative;
@@ -45,6 +47,8 @@
     width: var(--svg-width);
     height: var(--svg-height);
     display: block;
+    background-color: var(--chart-bg-color);
+    border-radius: var(--chart-border-radius);
   }
 
   polygon {
