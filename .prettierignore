@@ -8,3 +8,4 @@ package/*.js
 package/**/*.js
 package/*.map
 package/**/*.map
+api/*.json
