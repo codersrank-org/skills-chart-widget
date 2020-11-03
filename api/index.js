@@ -516,7 +516,7 @@ module.exports = async function (context, req) {
   let showOtherSkills = false;
   if (req.query['show-other-skills']) {
     showOtherSkills = req.query['show-other-skills'] || false;
-    if (showOtherSkills === 'true') showOtherSkills = false;
+    if (showOtherSkills === 'true') showOtherSkills = true;
   }
   const data = await fetchData(req.query.username);
   const chartData = getChartData(data.scores, skills, showOtherSkills);
