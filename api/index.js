@@ -1,3 +1,5 @@
+const https = require('https');
+
 const languageColors = {
   '1C Enterprise': '#814CCC',
   ABAP: '#E8274B',
@@ -243,20 +245,22 @@ const languageColors = {
   Other: '#bbb',
 };
 
-const fetchData = (username) => {
-  return fetch(
-    `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
+const fetchData = async (username) => {
+  return new Promise((resolve, reject) => {
+    const req = https.request(
+      `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
+      (res) => {
+        const chunks = [];
+        res.on('data', (data) => chunks.push(data));
+        res.on('end', () => {
+          let body = Buffer.concat(chunks);
+          resolve(JSON.parse(body));
+        });
       },
-    },
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
+    );
+    req.on('error', reject);
+    req.end();
+  });
 };
 
 const stringToColor = (str = '') => {
@@ -483,38 +487,38 @@ const renderChart = ({
   `.trim();
 };
 
-async function handleRequest(request) {
-  if (request.url.indexOf('username') < 0) {
-    return new Response('<svg xmlns="http://www.w3.org/2000/svg"></svg>', {
+module.exports = async function (context, req) {
+  var functionStartTime = new Date().getTime();
+  if (!req.query.username) {
+    context.res = {
+      status: 200,
       headers: {
         'content-type': 'image/svg+xml;charset=UTF-8',
       },
-    });
+      body: '<svg xmlns="http://www.w3.org/2000/svg"></svg>',
+    };
   }
-  const username = request.url.split('username=')[1].split('&')[0];
   let skills = [];
-  if (request.url.indexOf('skills=') >= 0) {
-    skills = request.url
-      .split('skills=')[1]
-      .split('&')[0]
+  if (req.query.skills) {
+    skills = req.query.skills
       .split(',')
       .map((s) => s.trim())
       .filter((s) => !!s);
   }
   let width = 640;
   let height = 320;
+  if (req.query.width) {
+    width = req.query.width;
+  }
+  if (req.query.height) {
+    height = req.query.height;
+  }
   let showOtherSkills = false;
-  if (request.url.indexOf('width=') >= 0) {
-    width = parseInt(request.url.split('width=')[1].split('&')[0] || 640, 10) || 640;
+  if (req.query['show-other-skills']) {
+    showOtherSkills = req.query['show-other-skills'] || false;
+    if (showOtherSkills === 'true') showOtherSkills = true;
   }
-  if (request.url.indexOf('height=') >= 0) {
-    height = parseInt(request.url.split('height=')[1].split('&')[0] || 320, 10) || 320;
-  }
-  if (request.url.indexOf('show-other-skills=') >= 0) {
-    showOtherSkills = request.url.split('show-other-skills=')[1].split('&')[0] || false;
-    if (showOtherSkills === 'true') showOtherSkills = false;
-  }
-  const data = await fetchData(username);
+  const data = await fetchData(req.query.username);
   const chartData = getChartData(data.scores, skills, showOtherSkills);
   const svg = renderChart({
     data: chartData,
@@ -523,13 +527,19 @@ async function handleRequest(request) {
     svgWidth: width,
     svgHeight: height,
   });
-  return new Response(svg, {
+  context.res = {
     headers: {
       'content-type': 'image/svg+xml;charset=UTF-8',
     },
+    body: svg,
+  };
+  var functionTime = new Date().getTime() - functionStartTime;
+  console.log('Skills chart generated with %o', {
+    username: req.query.username,
+    skills: skills,
+    width: width,
+    height: height,
+    showOtherSkills: showOtherSkills,
+    timeTook: functionTime,
   });
-}
-// eslint-disable-next-line
-addEventListener('fetch', (event) => {
-  return event.respondWith(handleRequest(event.request));
-});
+};
