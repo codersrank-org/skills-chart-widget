@@ -15,12 +15,12 @@ const STATE_SUCCESS = 3;
 // eslint-disable-next-line
 const STYLES = `$_STYLES_$`;
 
-const tempDiv = document.createElement('div');
-
 // eslint-disable-next-line
 class CodersRankSkillsChart extends HTMLElement {
   constructor() {
     super();
+
+    this.tempDiv = document.createElement('div');
 
     this.shadowEl = this.attachShadow({ mode: 'closed' });
 
@@ -221,6 +221,7 @@ class CodersRankSkillsChart extends HTMLElement {
       visibleLabels,
       currentIndex,
       formatLabel,
+      tempDiv,
     } = this;
     const ctx = {
       data,
@@ -336,12 +337,12 @@ class CodersRankSkillsChart extends HTMLElement {
 
     let tooltipEl = this.widgetEl.querySelector('.codersrank-skills-chart-tooltip');
     if (!tooltipEl) {
-      tempDiv.innerHTML = `
+      this.tempDiv.innerHTML = `
         <div class="codersrank-skills-chart-tooltip">
           ${this.tooltipText()}
         </div>
       `;
-      tooltipEl = tempDiv.querySelector('.codersrank-skills-chart-tooltip');
+      tooltipEl = this.tempDiv.querySelector('.codersrank-skills-chart-tooltip');
       this.widgetEl.querySelector('.codersrank-skills-chart-svg').appendChild(tooltipEl);
     } else {
       tooltipEl.innerHTML = this.tooltipText();
