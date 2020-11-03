@@ -253,7 +253,7 @@ const fetchData = async (username) => {
         const chunks = [];
         res.on('data', (data) => chunks.push(data));
         res.on('end', () => {
-          let body = Buffer.concat(chunks);
+          const body = Buffer.concat(chunks);
           resolve(JSON.parse(body));
         });
       },
@@ -487,8 +487,8 @@ const renderChart = ({
   `.trim();
 };
 
-module.exports = async function (context, req) {
-  var functionStartTime = new Date().getTime();
+module.exports = async (context, req) => {
+  const functionStartTime = new Date().getTime();
   if (!req.query.username) {
     context.res = {
       status: 200,
@@ -533,13 +533,14 @@ module.exports = async function (context, req) {
     },
     body: svg,
   };
-  var functionTime = new Date().getTime() - functionStartTime;
+  const functionTime = new Date().getTime() - functionStartTime;
+  // eslint-disable-next-line
   console.log('Skills chart generated with %o', {
     username: req.query.username,
-    skills: skills,
-    width: width,
-    height: height,
-    showOtherSkills: showOtherSkills,
+    skills,
+    width,
+    height,
+    showOtherSkills,
     timeTook: functionTime,
   });
 };
