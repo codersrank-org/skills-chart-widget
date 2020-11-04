@@ -1,5 +1,15 @@
 # CodersRank Skills Chart Widget
 
+- [Install from NPM](#install-from-npm)
+- [Install from CDN](#install-from-cdn)
+- [Usage](#usage)
+- [Widget Attributes](#widget-attributes)
+- [Styling](#styling)
+- [Events](#events)
+- [Use As Image](#use-as-image)
+- [Contribution](#contribution)
+- [Licence](#Licence)
+
 CodersRank Skills Chart Widget is a web component that allows you easily integrate nice looking skills chart from your [CodersRank](https://codersrank.io) profile to your personal website:
 
 <img src="preview.png" />
@@ -144,6 +154,34 @@ function onData(event) {
   console.log(`Highest score was ${highest.score} on ${highest.date}`);
 }
 document.querySelector('#skills-chart').addEventListener('data', onData);
+```
+
+## Use As Image
+
+It is also possible to insert Skills Chart as an image. It is useful in places where you can't integrate web component, or for example on your GitHub profile README.md page.
+
+Image URL is the following:
+
+```
+https://cr-skills-chart-widget.azurewebsites.net/api/api?username=YOUR_USERNAME
+```
+
+It accepts query parameters:
+
+| Name                | Type      | Default | Description                                                                                       |
+| ------------------- | --------- | ------- | ------------------------------------------------------------------------------------------------- |
+| `username`          | `string`  |         | Your [CodersRank](https://codersrank.io) username                                                 |
+| `skills`            | `string`  |         | Specify skills to display in chart (comma separated), for example `?skills=JavaScript,TypeScript` |
+| `width`             | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width                      |
+| `height`            | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height                    |
+| `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area                      |
+
+For example:
+
+```html
+<img
+  src="https://cr-skills-chart-widget.azurewebsites.net/api/api?username=YOUR_USERNAME&skills=JavaScript,TypeScript&show-other-skills=true"
+/>
 ```
 
 ## Contribution
