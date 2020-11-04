@@ -530,17 +530,21 @@ module.exports = async (context, req) => {
   context.res = {
     headers: {
       'content-type': 'image/svg+xml;charset=UTF-8',
+      'cache-control': 'no-cache, no-store, must-revalidate',
+      expires: '0',
     },
     body: svg,
   };
   const functionTime = new Date().getTime() - functionStartTime;
   // eslint-disable-next-line
-  console.log('Skills chart generated with %o', {
-    username: req.query.username,
-    skills,
-    width,
-    height,
-    showOtherSkills,
-    timeTook: functionTime,
-  });
+  context.log(
+    JSON.stringify({
+      username: req.query.username,
+      skills,
+      width,
+      height,
+      showOtherSkills,
+      timeTook: functionTime,
+    }),
+  );
 };
