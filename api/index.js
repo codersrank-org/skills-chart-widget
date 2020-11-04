@@ -508,10 +508,10 @@ module.exports = async (context, req) => {
   let width = 640;
   let height = 320;
   if (req.query.width) {
-    width = req.query.width;
+    width = parseInt(req.query.width, 10);
   }
   if (req.query.height) {
-    height = req.query.height;
+    height = parseInt(req.query.height, 10);
   }
   let showOtherSkills = false;
   if (req.query['show-other-skills']) {
