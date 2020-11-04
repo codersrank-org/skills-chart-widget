@@ -537,14 +537,14 @@ module.exports = async (context, req) => {
   };
   const functionTime = new Date().getTime() - functionStartTime;
   // eslint-disable-next-line
-  context.log(
+  console.log(
     JSON.stringify({
       username: req.query.username,
       skills,
       width,
       height,
       showOtherSkills,
-      timeTook: functionTime,
+      timeTook: functionTime / 1000 + 's',
     }),
   );
 };
