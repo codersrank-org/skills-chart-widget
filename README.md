@@ -184,6 +184,16 @@ For example:
 />
 ```
 
+Live example:
+
+```html
+<img
+  src="https://cr-skills-chart-widget.azurewebsites.net/api/api?username=nolimits4web&skills=Vue,C%2B%2B,C%23,SCSS,Svelte&width=820"
+/>
+```
+
+Note that you need to URL Encode some of the characters, for example `C++` should be `C%2B%2B` and `C#` should be `C%23`
+
 ## Contribution
 
 Yes please! See the [contributing guidelines](https://github.com/codersrank-org/skills-chart-widget/blob/master/CONTRIBUTING.md) for details.
