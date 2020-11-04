@@ -340,7 +340,7 @@ const getChartData = (data = [], displaySkills = [], showOtherSkills = false) =>
     });
     otherDataset = {
       label: 'Other',
-      color: 'var(--other-skills-area-color)',
+      color: getColor('Other'),
       values,
     };
   }
