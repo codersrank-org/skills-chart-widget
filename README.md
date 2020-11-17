@@ -10,6 +10,8 @@
 - [Contribution](#contribution)
 - [Licence](#Licence)
 
+<!-- DOCS_START -->
+
 CodersRank Skills Chart Widget is a web component that allows you easily integrate nice looking skills chart from your [CodersRank](https://codersrank.io) profile to your personal website:
 
 <img src="preview.png" />
