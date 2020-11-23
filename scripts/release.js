@@ -48,6 +48,12 @@ async function release() {
     'rm -rf *.svelte',
   ];
 
+  // copy readme
+  fs.copyFileSync(
+    path.resolve(__dirname, '../README.md'),
+    path.resolve(__dirname, '../package/README.md'),
+  );
+
   await exec.promise('git pull');
   await exec.promise('npm i');
   await exec.promise(`cd ./package && ${cleanPackage.join(' && ')}`);
