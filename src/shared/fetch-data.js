@@ -1,17 +1,19 @@
 const cache = {};
 
-export const fetchData = (username) => {
+export const fetchData = (username, id) => {
   if (cache[username]) return Promise.resolve(cache[username]);
 
-  return fetch(
-    `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  let endpoint = `https://grpcgateway.codersrank.io/candidate/${
+    username || id
+  }/GetScoreProgress`;
+  if (id) endpoint += '?id=true';
+
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  )
+  })
     .then((res) => res.json())
     .then((data) => {
       if (data && data.code === 400) {

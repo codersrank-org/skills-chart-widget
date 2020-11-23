@@ -89,6 +89,7 @@ class CodersRankSkillsChart extends HTMLElement {
   static get observedAttributes() {
     return [
       'username',
+      'id',
       'svg-width',
       'svg-height',
       'legend',
@@ -158,6 +159,14 @@ class CodersRankSkillsChart extends HTMLElement {
     this.setAttribute('username', value);
   }
 
+  get id() {
+    return this.getAttribute('id');
+  }
+
+  set id(value) {
+    this.setAttribute('id', value);
+  }
+
   get svgWidth() {
     const svgWidth = parseInt(this.getAttribute('svg-width') || 0, 10);
     return svgWidth || 640;
@@ -207,6 +216,7 @@ class CodersRankSkillsChart extends HTMLElement {
   render() {
     const {
       username,
+      id,
       mounted,
       state,
       shadowEl,
@@ -238,7 +248,7 @@ class CodersRankSkillsChart extends HTMLElement {
     };
     this.detachSVGEvents();
 
-    if (!username || !mounted) return;
+    if ((!username && !id) || !mounted) return;
     if (state === STATE_SUCCESS) {
       tempDiv.innerHTML = renderChart(ctx);
     } else if (state === STATE_ERROR) {
@@ -259,10 +269,10 @@ class CodersRankSkillsChart extends HTMLElement {
   }
 
   loadAndRender() {
-    const { username } = this;
+    const { username, id } = this;
     this.state = STATE_LOADING;
     this.render();
-    fetchData(username)
+    fetchData(username, id)
       .then((data) => {
         this.emitData(data);
         this.data = getChartData(data.scores, this.displaySkills, this.showOtherSkills);
