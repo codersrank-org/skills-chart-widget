@@ -1,6 +1,6 @@
 {
   "name": "codersrank-skill-chart-source",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "scripts": {
     "build:dev": "cross-env NODE_ENV=development node scripts/build",
     "build:prod": "cross-env NODE_ENV=production node scripts/build",

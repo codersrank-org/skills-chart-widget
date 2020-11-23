@@ -544,7 +544,7 @@ module.exports = async (context, req) => {
       width,
       height,
       showOtherSkills,
-      timeTook: functionTime / 1000 + 's',
+      timeTook: `${functionTime / 1000}s`,
     }),
   );
 };
