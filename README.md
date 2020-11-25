@@ -56,16 +56,17 @@ As it is a web component the usage is pretty simple, just add widget HTML tag wi
 
 Widget supports following properties as HTML element attributes:
 
-| Name                | Type      | Default | Description                                                                               |
-| ------------------- | --------- | ------- | ----------------------------------------------------------------------------------------- |
-| `username`          | `string`  |         | Your [CodersRank](https://codersrank.io) username                                         |
-| `labels`            | `boolean` | `false` | Display chart labels (chart axis with dates)                                              |
-| `legend`            | `boolean` | `false` | Display legend below the chart                                                            |
-| `tooltip`           | `boolean` | `false` | Enables tooltip with number of activities per day                                         |
-| `skills`            | `string`  |         | Allows to specify skills to display in chart. For example `skills="JavaScript, Vue, CSS"` |
-| `svg-width`         | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width              |
-| `svg-height`        | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height            |
-| `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area              |
+| Name                | Type      | Default | Description                                                                                                                                             |
+| ------------------- | --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `username`          | `string`  |         | Your [CodersRank](https://codersrank.io) username                                                                                                       |
+| `labels`            | `boolean` | `false` | Display chart labels (chart axis with dates)                                                                                                            |
+| `legend`            | `boolean` | `false` | Display legend below the chart                                                                                                                          |
+| `tooltip`           | `boolean` | `false` | Enables tooltip with number of activities per day                                                                                                       |
+| `skills`            | `string`  |         | Allows to specify skills to display in chart. For example `skills="JavaScript, Vue, CSS"`                                                               |
+| `active-skills`     | `string`  |         | Allows to specify skills to be active by default (all skills not specified here will appear as disabled). For example `active-skills="JavaScript, Vue"` |
+| `svg-width`         | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width                                                                            |
+| `svg-height`        | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height                                                                          |
+| `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area                                                                            |
 
 For example, to enable labels, legend and tooltip:
 

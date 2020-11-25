@@ -37,6 +37,7 @@ class CodersRankSkillsChart extends HTMLElement {
 
     this.linesOffsets = [];
     this.currentIndex = null;
+    this.activeSkillsSet = false;
     this.hiddenDatasets = [];
     this.highlightedDatasetLabel = null;
     this.highlightedDatasetTimeout = null;
@@ -95,6 +96,7 @@ class CodersRankSkillsChart extends HTMLElement {
       'legend',
       'labels',
       'skills',
+      'active-skills',
       'show-other-skills',
     ];
   }
@@ -125,6 +127,23 @@ class CodersRankSkillsChart extends HTMLElement {
 
   set skills(value) {
     this.setAttribute('skills', value);
+  }
+
+  get activeSkills() {
+    const skills = this.getAttribute('active-skills') || '';
+    if (typeof skills !== 'string') return [];
+    return skills
+      .split(',')
+      .map((s) => s.trim())
+      .filter((s) => !!s);
+  }
+
+  set activeSkills(value) {
+    this.setAttribute('active-skills', value);
+  }
+
+  set ['active-skills'](value) {
+    this.setAttribute('active-skills', value);
   }
 
   get showOtherSkills() {
@@ -276,6 +295,12 @@ class CodersRankSkillsChart extends HTMLElement {
       .then((data) => {
         this.emitData(data);
         this.data = getChartData(data.scores, this.displaySkills, this.showOtherSkills);
+        if (this.activeSkills && this.activeSkills.length && !this.activeSkillsSet) {
+          this.hiddenDatasets = this.data.datasets
+            .map((d) => d.label)
+            .filter((l) => this.activeSkills.indexOf(l) < 0);
+          this.activeSkillsSet = true;
+        }
         this.state = STATE_SUCCESS;
         this.render();
       })
