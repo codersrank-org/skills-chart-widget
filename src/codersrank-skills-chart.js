@@ -404,6 +404,7 @@ class CodersRankSkillsChart extends HTMLElement {
   }
 
   toggleDataset(label) {
+    this.highlightedDatasetLabel = null;
     if (this.hiddenDatasets.includes(label)) {
       this.hiddenDatasets.splice(this.hiddenDatasets.indexOf(label), 1);
     } else {
@@ -430,15 +431,18 @@ class CodersRankSkillsChart extends HTMLElement {
     if (!buttonEl) return;
     const label = buttonEl.getAttribute('data-label');
     if (!label) return;
-    this.highlightedDatasetLabel = label;
     const polygon = this.widgetEl.querySelector(`polygon[data-label="${label}"]`);
     if (!polygon) return;
     clearTimeout(this.highlightedDatasetTimeout);
-    const polygons = this.widgetEl.querySelectorAll('polygon');
-    for (let i = 0; i < polygons.length; i += 1) {
-      polygons[i].classList.add('codersrank-skills-chart-hidden');
-    }
-    polygon.classList.remove('codersrank-skills-chart-hidden');
+    this.highlightedDatasetTimeout = setTimeout(() => {
+      this.highlightedDatasetLabel = label;
+
+      const polygons = this.widgetEl.querySelectorAll('polygon');
+      for (let i = 0; i < polygons.length; i += 1) {
+        polygons[i].classList.add('codersrank-skills-chart-hidden');
+      }
+      polygon.classList.remove('codersrank-skills-chart-hidden');
+    }, 100);
   }
 
   onMouseLeave(e) {
