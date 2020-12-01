@@ -1,4 +1,5 @@
 const https = require('https');
+const codersRankLogo = require('./codersrank-logo');
 
 const languageColors = {
   '1C Enterprise': '#814CCC',
@@ -372,6 +373,7 @@ const renderChart = ({
   svgHeight: height,
   legend: showLegend,
   labels: showLabels,
+  branding,
 } = {}) => {
   const { datasets, labels } = data;
 
@@ -438,23 +440,38 @@ const renderChart = ({
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 ${width} ${height + labelsMargin + legendMargin + textLines.length * textLineHeight}"
     >
-    <style>
-      text {
-        font-size: 12px;
-        font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
-      }
-      #labels text {
-        dominant-baseline: hanging;
-        font-size: 10px;
-        fill: rgba(0,0,0,0.5);
-      }
-      #legend {
-        font-weight: 600;
-      }
-      #legend tspan {
-        font-size: 15px;
-      }
-    </style>
+      <style>
+        text {
+          font-size: 12px;
+          font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+        }
+        #labels text {
+          dominant-baseline: hanging;
+          font-size: 10px;
+          fill: rgba(0,0,0,0.5);
+        }
+        #legend {
+          font-weight: 600;
+        }
+        #legend tspan {
+          font-size: 15px;
+        }
+        #branding-text {
+          font-size: 9px;
+          dominant-baseline: hanging;
+          opacity: 0.5;
+        }
+        #branding-logo {
+          opacity: 0.5;
+        }
+      </style>
+
+      ${branding ? /* html */`
+      <text id="branding-text" y="6">Powered by</text>
+      <svg id="branding-logo" xmlns="http://www.w3.org/2000/svg" width="90" height="39" viewBox="0 0 258 39" x="52" y="-10">
+        ${codersRankLogo}
+      </svg>
+      ` : ''}
       ${polygons.map((polygon) => /* html */`
       <polygon
         fill="${polygon.color}"
@@ -518,6 +535,10 @@ module.exports = async (context, req) => {
     showOtherSkills = req.query['show-other-skills'] || false;
     if (showOtherSkills === 'true') showOtherSkills = true;
   }
+  let branding = true;
+  if (req.query.branding) {
+    branding = req.query.branding !== 'false';
+  }
   const data = await fetchData(req.query.username);
   const chartData = getChartData(data.scores, skills, showOtherSkills);
   const svg = renderChart({
@@ -526,6 +547,7 @@ module.exports = async (context, req) => {
     legend: true,
     svgWidth: width,
     svgHeight: height,
+    branding,
   });
   context.res = {
     headers: {
