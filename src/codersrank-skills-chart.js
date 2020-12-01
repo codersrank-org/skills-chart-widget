@@ -232,6 +232,14 @@ class CodersRankSkillsChart extends HTMLElement {
     this.setAttribute('labels', value);
   }
 
+  get branding() {
+    return this.getAttribute('branding') !== 'false';
+  }
+
+  set branding(value) {
+    this.setAttribute('branding', value);
+  }
+
   render() {
     const {
       username,
@@ -244,6 +252,7 @@ class CodersRankSkillsChart extends HTMLElement {
       svgHeight,
       legend,
       labels,
+      branding,
 
       hiddenDatasets,
       highlightedDatasetLabel,
@@ -258,6 +267,7 @@ class CodersRankSkillsChart extends HTMLElement {
       svgHeight,
       legend,
       labels,
+      branding,
 
       hiddenDatasets,
       highlightedDatasetLabel,

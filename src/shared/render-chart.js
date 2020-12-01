@@ -1,3 +1,5 @@
+import { codersrRankLogo } from './codersrank-logo';
+
 export const renderChart = ({
   data,
   svgWidth: width,
@@ -5,6 +7,7 @@ export const renderChart = ({
   legend: showLegend,
   labels: showLabels,
   preloader,
+  branding,
 
   hiddenDatasets,
   highlightedDatasetLabel,
@@ -132,6 +135,14 @@ export const renderChart = ({
           ${dataset.label}
         </button>
         `).join('')}
+      </div>
+      ` : ''}
+      ${branding ? /* html */`
+      <div class="codersrank-skills-chart-branding">
+        <a href="https://codersrank.io" target="_blank" rel="noopener noreferrer">
+          <span>Powered by </span>
+          ${codersrRankLogo}
+        </a>
       </div>
       ` : ''}
     </div>

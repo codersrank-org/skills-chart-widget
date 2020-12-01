@@ -67,6 +67,7 @@ Widget supports following properties as HTML element attributes:
 | `svg-width`         | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width                                                                            |
 | `svg-height`        | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height                                                                          |
 | `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area                                                                            |
+| `branding`          | `boolean` | `true`  | Displays "Powered by CodersRank" link                                                                                                                   |
 
 For example, to enable labels, legend and tooltip:
 
@@ -105,6 +106,7 @@ There are following CSS Custom Properties are available:
 | `--other-skills-area-color`    | `#bbb`                                                    |
 | `--chart-bg-color`             | `transparent`                                             |
 | `--chart-border-radius`        | `0px`                                                     |
+| `--branding-text-color`        | `inherit`                                                 |
 
 For example, to change legend text color to `red` and font-size to `12px`, add this to CSS stylesheet:
 
