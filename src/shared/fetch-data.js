@@ -1,7 +1,8 @@
 const cache = {};
 
 export const fetchData = (username, id) => {
-  if (cache[username]) return Promise.resolve(cache[username]);
+  if (username && cache[username]) return Promise.resolve(cache[username]);
+  if (id && cache[id]) return Promise.resolve(cache[id]);
 
   let endpoint = `https://grpcgateway.codersrank.io/candidate/${
     username || id
@@ -19,7 +20,12 @@ export const fetchData = (username, id) => {
       if (data && data.code === 400) {
         return Promise.reject(data);
       }
-      cache[username] = data;
+      if (id) {
+        cache[id] = data;
+      } else {
+        cache[username] = data;
+      }
+
       return data;
     })
     .catch((err) => {
