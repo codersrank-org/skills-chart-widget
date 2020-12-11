@@ -374,8 +374,11 @@ const renderChart = ({
   legend: showLegend,
   labels: showLabels,
   branding,
+  bg = '#fff',
+  padding = 0,
 } = {}) => {
   const { datasets, labels } = data;
+  const paddingWidth = width - padding * 2;
 
   const getSummValues = () => {
     const summValues = [];
@@ -401,11 +404,11 @@ const renderChart = ({
       const points = values.map((originalValue, valueIndex) => {
         lastValues[valueIndex] += originalValue;
         const value = lastValues[valueIndex];
-        const x = (valueIndex / (values.length - 1)) * width;
-        const y = height - (value / maxValue) * height;
+        const x = (valueIndex / (values.length - 1)) * paddingWidth + padding;
+        const y = height - (value / maxValue) * (height - padding);
         return `${x} ${y}`;
       });
-      points.push(`${width} ${height} 0 ${height}`);
+      points.push(`${paddingWidth + padding} ${height} ${0 + padding} ${height}`);
 
       polygons.push({
         label,
@@ -439,6 +442,7 @@ const renderChart = ({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 ${width} ${height + labelsMargin + legendMargin + textLines.length * textLineHeight}"
+      style="background-color: ${bg}"
     >
       <style>
         text {
@@ -467,8 +471,8 @@ const renderChart = ({
       </style>
 
       ${branding ? /* html */`
-      <text id="branding-text" y="6">Powered by</text>
-      <svg id="branding-logo" xmlns="http://www.w3.org/2000/svg" width="90" height="39" viewBox="0 0 258 39" x="52" y="-10">
+      <text id="branding-text" x="${0 + padding}" y="${6 + padding}">Powered by</text>
+      <svg id="branding-logo" xmlns="http://www.w3.org/2000/svg" width="90" height="39" viewBox="0 0 258 39" x="${52 + padding}" y="${-10 + padding}">
         ${codersRankLogo}
       </svg>
       ` : ''}
@@ -484,7 +488,7 @@ const renderChart = ({
         <g id="labels">
         ${labels.map((label, index) => /* html */`
           ${visibleLabels.includes(label) ? /* html */`
-          <text x="${index * width / labels.length}" y="${height + labelsMargin}">
+          <text x="${index * (width - padding * 2) / labels.length + padding}" y="${height + labelsMargin}">
             ${formatLabel(label)}
           </text>
           ` : ''}
@@ -539,6 +543,15 @@ module.exports = async (context, req) => {
   if (req.query.branding) {
     branding = req.query.branding !== 'false';
   }
+  let bg = '#fff';
+  if (req.query.bg) {
+    bg = req.query.bg;
+  }
+
+  let padding = 0;
+  if (req.query.padding) {
+    padding = parseInt(req.query.padding, 10);
+  }
   const data = await fetchData(req.query.username);
   const chartData = getChartData(data.scores, skills, showOtherSkills);
   const svg = renderChart({
@@ -548,6 +561,8 @@ module.exports = async (context, req) => {
     svgWidth: width,
     svgHeight: height,
     branding,
+    bg,
+    padding,
   });
   context.res = {
     headers: {

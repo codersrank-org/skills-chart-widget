@@ -180,6 +180,8 @@ It accepts query parameters:
 | `width`             | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width                      |
 | `height`            | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height                    |
 | `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area                      |
+| `bg`                | `string`  | `#fff`  | Chart background image                                                                            |
+| `padding`           | `number`  | `0`     | Image content padding                                                                             |
 
 For example:
 
