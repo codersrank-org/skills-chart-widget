@@ -2,7 +2,6 @@ import { getColor } from './get-color';
 
 export const getChartData = (data = [], displaySkills = [], showOtherSkills = false) => {
   const scoresData = [...data];
-  scoresData.reverse();
 
   const languagesList = [];
   scoresData.forEach((score) => {

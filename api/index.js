@@ -249,7 +249,7 @@ const languageColors = {
 const fetchData = async (username) => {
   return new Promise((resolve, reject) => {
     const req = https.request(
-      `https://grpcgateway.codersrank.io/candidate/${username}/GetScoreProgress`,
+      `https://api.codersrank.io/v2/users/${username}/tech_score_history`,
       (res) => {
         const chunks = [];
         res.on('data', (data) => chunks.push(data));
@@ -294,7 +294,6 @@ const getColor = (language) => {
 
 const getChartData = (data = [], displaySkills = [], showOtherSkills = false) => {
   const scoresData = [...data];
-  scoresData.reverse();
 
   const languagesList = [];
   scoresData.forEach((score) => {

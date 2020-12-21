@@ -4,9 +4,9 @@ export const fetchData = (username, id) => {
   if (username && cache[username]) return Promise.resolve(cache[username]);
   if (id && cache[id]) return Promise.resolve(cache[id]);
 
-  let endpoint = `https://grpcgateway.codersrank.io/candidate/${
+  let endpoint = `https://api.codersrank.io/v2/users/${
     username || id
-  }/GetScoreProgress`;
+  }/tech_score_history`;
   if (id) endpoint += '?id=true';
 
   return fetch(endpoint, {
