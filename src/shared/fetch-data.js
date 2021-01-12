@@ -7,7 +7,7 @@ export const fetchData = (username, id) => {
   let endpoint = `https://api.codersrank.io/v2/users/${
     username || id
   }/tech_score_history`;
-  if (id) endpoint += '?id=true';
+  if (id) endpoint += '?get_by=id';
 
   return fetch(endpoint, {
     method: 'GET',
