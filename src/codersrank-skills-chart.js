@@ -42,8 +42,6 @@ class CodersRankSkillsChart extends HTMLElement {
     this.highlightedDatasetLabel = null;
     this.highlightedDatasetTimeout = null;
 
-    this.maxLabels = 8;
-
     this.mounted = false;
 
     this.state = STATE_IDLE;
@@ -91,6 +89,7 @@ class CodersRankSkillsChart extends HTMLElement {
     return [
       'username',
       'id',
+      'max-labels',
       'svg-width',
       'svg-height',
       'legend',
@@ -184,6 +183,19 @@ class CodersRankSkillsChart extends HTMLElement {
 
   set id(value) {
     this.setAttribute('id', value);
+  }
+
+  get maxLabels() {
+    const maxLabels = parseInt(this.getAttribute('max-labels') || 0, 10);
+    return maxLabels || 8;
+  }
+
+  set maxLabels(value) {
+    this.setAttribute('max-labels', value);
+  }
+
+  set ['max-labels'](value) {
+    this.setAttribute('max-labels', value);
   }
 
   get svgWidth() {

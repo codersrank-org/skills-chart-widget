@@ -67,6 +67,7 @@ Widget supports following properties as HTML element attributes:
 | `svg-width`         | `number`  | `640`   | Render width of chart's SVG element. Ideally should match actual chart width                                                                            |
 | `svg-height`        | `number`  | `320`   | Render height of chart's SVG element. Ideally should match actual chart height                                                                          |
 | `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area                                                                            |
+| `max-labels`        | `number`  | `8`     | Maximum amount of labels (dates) to be displayed (dates)                                                                                                |
 | `branding`          | `boolean` | `true`  | Displays "Powered by CodersRank" link                                                                                                                   |
 
 For example, to enable labels, legend and tooltip:
