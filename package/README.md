@@ -96,6 +96,7 @@ There are following CSS Custom Properties are available:
 | `--label-text-color`           | `inherit`                                                 |
 | `--label-font-size`            | `10px`                                                    |
 | `--label-font-weight`          | `500`                                                     |
+| `--label-white-space`          | `nowrap`                                                  |
 | `--legend-text-color`          | `inherit`                                                 |
 | `--legend-disabled-text-color` | `#ccc`                                                    |
 | `--legend-font-size`           | `14px`                                                    |
