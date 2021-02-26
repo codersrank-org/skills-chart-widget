@@ -146,6 +146,11 @@ Widget element supports the following events:
         <p>`scores` array contains information about skills scores by dates</p>
       </td>
     </tr>
+    <tr>
+      <td><code>render</code></td>
+      <td>Will be fired right after chart rendered to DOM</td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
 

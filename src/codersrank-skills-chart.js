@@ -85,6 +85,11 @@ class CodersRankSkillsChart extends HTMLElement {
     this.dispatchEvent(event);
   }
 
+  emitRender() {
+    const event = new CustomEvent('render');
+    this.dispatchEvent(event);
+  }
+
   static get observedAttributes() {
     return [
       'username',
@@ -307,6 +312,9 @@ class CodersRankSkillsChart extends HTMLElement {
     this.widgetEl = widgetEl;
     shadowEl.appendChild(widgetEl);
     this.attachSVGEvents();
+    if (state === STATE_SUCCESS) {
+      this.emitRender();
+    }
   }
 
   loadAndRender() {
