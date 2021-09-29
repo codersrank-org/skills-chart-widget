@@ -189,6 +189,7 @@ It accepts query parameters:
 | `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area                      |
 | `bg`                | `string`  | `#fff`  | Chart background image                                                                            |
 | `padding`           | `number`  | `0`     | Image content padding                                                                             |
+| `sort-by-score`     | `boolean` | `false` | Sorts labels by score if true or alphabetically                                                   |
 
 For example:
 

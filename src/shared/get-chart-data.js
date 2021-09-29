@@ -1,6 +1,11 @@
 import { getColor } from './get-color';
 
-export const getChartData = (data = [], displaySkills = [], showOtherSkills = false) => {
+export const getChartData = (
+  data = [],
+  displaySkills = [],
+  showOtherSkills = false,
+  sortByScore = false,
+) => {
   const scoresData = [...data];
 
   const languagesList = [];
@@ -21,16 +26,19 @@ export const getChartData = (data = [], displaySkills = [], showOtherSkills = fa
   const labels = scoresData.map((score) => score.date);
   const datasets = languagesList.map((language) => {
     const values = [];
+    let maxScore = 0;
     scoresData.forEach((score) => {
       const languageData = score.languages.filter(
         (langData) => langData.language === language,
       )[0];
+      if (languageData && languageData.score > maxScore) maxScore = languageData.score;
       values.push(languageData ? languageData.score : 0);
     });
     return {
       label: language,
       color: getColor(language),
       values,
+      maxScore,
     };
   });
 
@@ -53,9 +61,15 @@ export const getChartData = (data = [], displaySkills = [], showOtherSkills = fa
     };
   }
 
-  datasets.sort((a, b) => {
-    return a.label > b.label ? 1 : -1;
-  });
+  if (sortByScore) {
+    datasets.sort((a, b) => {
+      return a.maxScore > b.maxScore ? 1 : -1;
+    });
+  } else {
+    datasets.sort((a, b) => {
+      return a.label > b.label ? 1 : -1;
+    });
+  }
 
   if (otherDataset) {
     datasets.push(otherDataset);

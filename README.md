@@ -69,6 +69,7 @@ Widget supports following properties as HTML element attributes:
 | `show-other-skills` | `boolean` | `false` | Group skills not specified in `skills` property under the "Other" chart area                                                                            |
 | `max-labels`        | `number`  | `8`     | Maximum amount of labels (dates) to be displayed (dates)                                                                                                |
 | `branding`          | `boolean` | `true`  | Displays "Powered by CodersRank" link                                                                                                                   |
+| `sort-by-score`     | `boolean` | `false` | Sorts labels by score if true or alphabetically                                                                                                         |
 
 For example, to enable labels, legend and tooltip:
 
