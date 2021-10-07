@@ -356,7 +356,7 @@ const getChartData = (
   if (sortByScore) {
     datasets.sort((a, b) => {
       if (b.label === 'Other') return -1;
-      return a.maxScore > b.maxScore ? 1 : -1;
+      return a.maxScore > b.maxScore ? -1 : 1;
     });
   } else {
     datasets.sort((a, b) => {
