@@ -292,7 +292,12 @@ const getColor = (language) => {
     : stringToColor(language, false);
 };
 
-const getChartData = (data = [], displaySkills = [], showOtherSkills = false) => {
+const getChartData = (
+  data = [],
+  displaySkills = [],
+  showOtherSkills = false,
+  sortByScore = false,
+) => {
   const scoresData = [...data];
 
   const languagesList = [];
@@ -313,16 +318,19 @@ const getChartData = (data = [], displaySkills = [], showOtherSkills = false) =>
   const labels = scoresData.map((score) => score.date);
   const datasets = languagesList.map((language) => {
     const values = [];
+    let maxScore = 0;
     scoresData.forEach((score) => {
       const languageData = score.languages.filter(
         (langData) => langData.language === language,
       )[0];
+      if (languageData && languageData.score > maxScore) maxScore = languageData.score;
       values.push(languageData ? languageData.score : 0);
     });
     return {
       label: language,
       color: getColor(language),
       values,
+      maxScore,
     };
   });
 
@@ -345,10 +353,17 @@ const getChartData = (data = [], displaySkills = [], showOtherSkills = false) =>
     };
   }
 
-  datasets.sort((a, b) => {
-    if (b.label === 'Other') return -1;
-    return a.label > b.label ? 1 : -1;
-  });
+  if (sortByScore) {
+    datasets.sort((a, b) => {
+      if (b.label === 'Other') return -1;
+      return a.maxScore > b.maxScore ? -1 : 1;
+    });
+  } else {
+    datasets.sort((a, b) => {
+      if (b.label === 'Other') return -1;
+      return a.label > b.label ? 1 : -1;
+    });
+  }
 
   if (otherDataset) {
     datasets.push(otherDataset);
@@ -525,6 +540,13 @@ module.exports = async (context, req) => {
       .map((s) => s.trim())
       .filter((s) => !!s);
   }
+
+  let sortByScore = false;
+  if (req.query['sort-by-score']) {
+    sortByScore = req.query['sort-by-score'] || false;
+    if (sortByScore === 'true') sortByScore = true;
+  }
+
   let width = 640;
   let height = 320;
   if (req.query.width) {
@@ -552,7 +574,7 @@ module.exports = async (context, req) => {
     padding = parseInt(req.query.padding, 10);
   }
   const data = await fetchData(req.query.username);
-  const chartData = getChartData(data.scores, skills, showOtherSkills);
+  const chartData = getChartData(data.scores, skills, showOtherSkills, sortByScore);
   const svg = renderChart({
     data: chartData,
     labels: true,

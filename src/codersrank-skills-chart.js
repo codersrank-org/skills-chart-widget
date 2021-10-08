@@ -102,6 +102,7 @@ class CodersRankSkillsChart extends HTMLElement {
       'skills',
       'active-skills',
       'show-other-skills',
+      'sort-by-score',
     ];
   }
 
@@ -257,6 +258,20 @@ class CodersRankSkillsChart extends HTMLElement {
     this.setAttribute('branding', value);
   }
 
+  get sortByScore() {
+    const sortByScore = this.getAttribute('sort-by-score');
+    if (sortByScore === '' || sortByScore === 'true') return true;
+    return false;
+  }
+
+  set sortByScore(value) {
+    this.setAttribute('sort-by-score', value);
+  }
+
+  set ['sort-by-score'](value) {
+    this.setAttribute('sort-by-score', value);
+  }
+
   render() {
     const {
       username,
@@ -270,6 +285,7 @@ class CodersRankSkillsChart extends HTMLElement {
       legend,
       labels,
       branding,
+      sortByScore,
 
       hiddenDatasets,
       highlightedDatasetLabel,
@@ -285,6 +301,7 @@ class CodersRankSkillsChart extends HTMLElement {
       legend,
       labels,
       branding,
+      sortByScore,
 
       hiddenDatasets,
       highlightedDatasetLabel,
@@ -324,7 +341,12 @@ class CodersRankSkillsChart extends HTMLElement {
     fetchData(username, id)
       .then((data) => {
         this.emitData(data);
-        this.data = getChartData(data.scores, this.displaySkills, this.showOtherSkills);
+        this.data = getChartData(
+          data.scores,
+          this.displaySkills,
+          this.showOtherSkills,
+          this.sortByScore,
+        );
         if (this.activeSkills && this.activeSkills.length && !this.activeSkillsSet) {
           this.hiddenDatasets = this.data.datasets
             .map((d) => d.label)
